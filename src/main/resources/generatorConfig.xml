@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="generatorConfig.properties"></properties>
+
+    <!--<classPathEntry  location="E:\software\eclipse\Repository\mysql\mysql-connector-java\5.1.42\mysql-connector-java-5.1.42.jar" />-->
+
+    <context id="MysqlContext" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- 生成的model实现Serializable借口 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+            <property name="suppressJavaInterface" value="false"/>
+        </plugin>
+
+        <!-- 自动生成equals方法和hashcode方法 -->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+
+        <!-- 该插件给实体类添加toString() -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- lombok  annotantion-->
+        <plugin type="org.mybatis.generator.plugins.LombokPlugin"/>
+        <!--修改Mapper文件名-->
+        <plugin type="org.mybatis.generator.plugins.RenameJavaMapperPlugin">
+            <property name="searchString" value="Mapper$" />
+            <property name="replaceString" value="Dao" />
+        </plugin>
+        <!--修改xml文件名-->
+        <plugin type="org.mybatis.generator.plugins.RenameSqlMapperPlugin">
+            <property name="searchString" value="Mapper" />
+            <property name="replaceString" value="Dao" />
+        </plugin>
+
+
+        <!--注释 -->
+        <commentGenerator type="org.mybatis.generator.plugins.FieldCommentGenerator">
+            <!--<property name="suppressAllComments" value="true"/>-->   <!--关闭注释 -->
+        </commentGenerator>
+
+        <!--数据库连接信息 -->
+        <jdbcConnection
+                driverClass="${jdbc.driverClass}"
+                connectionURL="${jdbc.connectionURL}"
+                userId="${jdbc.user}"
+                password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!-- （非必需）类型处理器，在数据库类型和java类型之间的转换控制-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- dto class -->
+        <javaModelGenerator targetPackage="${model.package}"
+                            targetProject="${target.project}">
+            <property name="enableSubPackages" value="ture"/>
+            <property name="trimStrings" value="true"/>
+            <!--<property name="rootClass" value="实体基类"/>-->
+        </javaModelGenerator>
+
+        <!-- sql xml file -->
+        <sqlMapGenerator targetPackage="${xml.package}"
+                         targetProject="${xml.target.project}">
+            <property name="enableSubPackages" value="false" />
+            <property name="enableSelectByPrimaryKey" value="false"/>
+            <property name="enableUpdateByPrimaryKey" value="false"/>
+            <property name="enableDeleteByPrimaryKey" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- mapper class -->
+        <!-- type="ANNOTATEDMAPPER",生成基于注解的Mapper接口
+        type="MIXEDMAPPER",生成最小的基于注解的Mapper接口
+        type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="${mapper.package}"
+                             targetProject="${target.project}">
+            <property name="enableSubPackages" value="ture"/>
+        </javaClientGenerator>
+
+
+        <!--对应数据库表名 -->
+        <table schema="" tableName="t_report" domainObjectName="Report"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+
+    </context>
+</generatorConfiguration>
